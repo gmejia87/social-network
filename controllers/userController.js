@@ -47,18 +47,7 @@ const userController = {
   //DELETE user by ID
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
-      .then((deleteUser) => {
-        if (!deleteUser) {
-          return res
-            .status(404)
-            .json({ message: "No user found with this ID!" });
-        }
-        return Thought.findOneAndDelete(
-          { _id: params.thoughtID },
-          { $pull: { comments: params.thoughtID } },
-          { new: true }
-        );
-      })
+      .then((user) => res.json(user))
       .catch((err) => res.json(err));
   },
 };
