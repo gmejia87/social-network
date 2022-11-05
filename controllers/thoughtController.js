@@ -37,8 +37,6 @@ const thoughtController = {
           { new: true }
         );
       })
-      .populate({ path: "reactions", select: "-__v" })
-      .select("-__v")
       .then((thought) => {
         if (!thought) {
           res.status(404).json({ message: "No thoughts found with this ID" });
