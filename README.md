@@ -8,8 +8,9 @@ Social network web application where users can share their thoughts, react to fr
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Questions](#questions)
 - [Packages](#packages)
+- [Demo](#demo-video)
+- [Questions](#questions)
 
 ### Installation
 
