@@ -37,6 +37,8 @@ const thoughtController = {
           { new: true }
         );
       })
+      .populate({ path: "reactions", select: "-__v" })
+      .select("-__v")
       .then((thought) => {
         if (!thought) {
           res.status(404).json({ message: "No thoughts found with this ID" });
@@ -50,6 +52,8 @@ const thoughtController = {
   //UPDATE thought by ID
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate({ _id: params.id }, body, { new: true })
+      .populate({ path: "reactions", select: "-__v" })
+      .select("-__v")
       .then((thought) => {
         if (!thought) {
           res.status(404).json({ message: "No thoughts with this ID!" });
@@ -64,6 +68,42 @@ const thoughtController = {
   deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
       .then((user) => res.json(user))
+      .catch((err) => res.json(err));
+  },
+
+  //add reaction
+  addReaction({ params, body }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $push: { reactions: body } },
+      { new: true }
+    )
+      .populate({ path: "reactions", select: "-__v" })
+      .select("-__v")
+      .then((thought) => {
+        if (!thought) {
+          res.status(404).json({ message: "No thoughts with this ID!" });
+          return;
+        }
+        res.json(thought);
+      })
+      .catch((err) => res.json(err));
+  },
+
+  //remove reaction
+  deleteReaction({ params }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $pull: { reactions: { reactionId: params.reactionId } } },
+      { new: true, runValidators: true }
+    )
+      .then((thought) => {
+        if (!thought) {
+          res.status(404).json({ message: "No thoughts with this ID!" });
+          return;
+        }
+        res.json(thought);
+      })
       .catch((err) => res.json(err));
   },
 };
