@@ -35,7 +35,11 @@ Once server is listening, open insomnia and test `GET`, `POST`, `PUT` and `DELET
 
 ## Demo video
 
-placeholder -- working on walkthrough vid
+
+
+https://user-images.githubusercontent.com/108241017/200145955-334cda21-93b3-43d5-bb60-1b921b2e0a03.mp4
+
+
 
 ### Questions
 
