@@ -4,13 +4,21 @@ const userController = {
   //GET all users
   getAllUsers(req, res) {
     User.find()
+      //populate user thoughts
+      .populate({ path: "thoughts", select: "-__v" })
+      .select("-__v")
       .then((users) => res.json(users))
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 
   //GET user by ID
   getUserByID({ params }, res) {
     User.findOne({ _id: params.id })
+      .populate({ path: "thoughts", select: "-__v" })
+      .select("-__v")
       .then((user) => {
         if (!user) {
           res.status(404).json({ message: "No user found with this id!" });
